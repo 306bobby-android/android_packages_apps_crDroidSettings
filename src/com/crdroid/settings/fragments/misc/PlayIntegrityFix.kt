@@ -361,7 +361,7 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
             "spoofProps" to "true",
             "spoofProvider" to "false",
             "spoofSignature" to "false",
-            KEY_VENDING_BUILD to "true",
+            KEY_VENDING_BUILD to "false",
             KEY_VENDING_SDK to "false",
             "DEBUG" to "false",
         )
