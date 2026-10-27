@@ -1659,6 +1659,8 @@ A small donation helps keep this project alive and improving. You can dismiss th
     <string name="pif_flag_spoof_vending_build_summary">Apply the config\'s Build fields to the Play Store</string>
     <string name="pif_flag_spoof_vending_sdk_title">Spoof Play Store SDK level</string>
     <string name="pif_flag_spoof_vending_sdk_summary">Report SDK 32 to the Play Store. Only used when Play Store build spoofing is off</string>
+    <string name="pif_flag_spoof_vending_finger_title">Spoof Play Store fingerprint</string>
+    <string name="pif_flag_spoof_vending_finger_summary">Report only the config\'s fingerprint to the Play Store. Only used when Play Store build and SDK spoofing are off</string>
     <string name="pif_logging_title">Logging</string>
     <string name="pif_flag_debug_title">Debug logging</string>
     <string name="pif_flag_debug_summary">Log every spoofed field to logcat</string>

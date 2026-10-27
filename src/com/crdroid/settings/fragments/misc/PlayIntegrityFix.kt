@@ -328,6 +328,7 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
 
         internal const val KEY_VENDING_BUILD = "spoofVendingBuild"
         internal const val KEY_VENDING_SDK = "spoofVendingSdk"
+        internal const val KEY_VENDING_FINGER = "spoofVendingFinger"
         private const val KEY_VERBOSE_LOGS = "verboseLogs"
         private const val DEFAULT_VERBOSE_LOGS = "0"
 
@@ -349,7 +350,7 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
         /** Keys carried over when a new config is fetched, and cleared by Reset. */
         private val FLAG_KEYS = listOf(
             "spoofBuild", "spoofProps", "spoofProvider", "spoofSignature",
-            KEY_VENDING_BUILD, KEY_VENDING_SDK, "DEBUG", KEY_VERBOSE_LOGS,
+            KEY_VENDING_BUILD, KEY_VENDING_SDK, KEY_VENDING_FINGER, "DEBUG", KEY_VERBOSE_LOGS,
         )
 
         /**
@@ -363,6 +364,7 @@ class PlayIntegrityFix : SettingsPreferenceFragment() {
             "spoofSignature" to "false",
             KEY_VENDING_BUILD to "false",
             KEY_VENDING_SDK to "false",
+            KEY_VENDING_FINGER to "false",
             "DEBUG" to "false",
         )
 

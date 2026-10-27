@@ -97,6 +97,8 @@ private val FLAG_ROWS = listOf(
         R.string.pif_flag_spoof_vending_build_summary, false),
     FlagRow(PlayIntegrityFix.KEY_VENDING_SDK, R.string.pif_flag_spoof_vending_sdk_title,
         R.string.pif_flag_spoof_vending_sdk_summary, false),
+    FlagRow(PlayIntegrityFix.KEY_VENDING_FINGER, R.string.pif_flag_spoof_vending_finger_title,
+        R.string.pif_flag_spoof_vending_finger_summary, false),
 )
 
 private val DISPLAY_ORDER = listOf(
@@ -107,6 +109,10 @@ private val DISPLAY_ORDER = listOf(
 /** Same truthiness rule as PlayIntegritySpoofService.processKeyValue(). */
 internal fun pifFlagOn(value: String?, default: Boolean) =
     if (value.isNullOrEmpty()) default else value == "1" || value.equals("true", true)
+
+/** spoofVendingFinger may also hold a custom fingerprint, which counts as on. */
+private fun vendingFingerOn(value: String?) =
+    !value.isNullOrEmpty() && value != "0" && !value.equals("false", true)
 
 @Composable
 internal fun PlayIntegrityFixContent(state: PifUiState, actions: PifActions) {
@@ -240,16 +246,25 @@ internal fun PlayIntegrityFixContent(state: PifUiState, actions: PifActions) {
 
         SpoofGroup(title = stringResource(R.string.pif_flags_title)) {
             val vendingBuild = pifFlagOn(config[PlayIntegrityFix.KEY_VENDING_BUILD], false)
+            val vendingSdk = pifFlagOn(config[PlayIntegrityFix.KEY_VENDING_SDK], false)
             FLAG_ROWS.forEach { flag ->
-                // The framework only applies spoofVendingSdk while Play Store build
-                // spoofing is off.
-                val enabled = hasConfig &&
-                    !(flag.key == PlayIntegrityFix.KEY_VENDING_SDK && vendingBuild)
+                // The framework applies the first of Play Store build, SDK and fingerprint
+                // spoofing that is on, and ignores the rest.
+                val enabled = hasConfig && when (flag.key) {
+                    PlayIntegrityFix.KEY_VENDING_SDK -> !vendingBuild
+                    PlayIntegrityFix.KEY_VENDING_FINGER -> !vendingBuild && !vendingSdk
+                    else -> true
+                }
+                val checked = if (flag.key == PlayIntegrityFix.KEY_VENDING_FINGER) {
+                    vendingFingerOn(config[flag.key])
+                } else {
+                    pifFlagOn(config[flag.key], flag.default)
+                }
                 item {
                     SpoofSwitchRow(
                         title = stringResource(flag.title),
                         summary = stringResource(flag.summary),
-                        checked = pifFlagOn(config[flag.key], flag.default),
+                        checked = checked,
                         enabled = enabled,
                         onCheckedChange = { actions.onFlagChange(flag.key, it) },
                     )
