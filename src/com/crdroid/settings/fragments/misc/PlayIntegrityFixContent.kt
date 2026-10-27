@@ -94,7 +94,7 @@ private val FLAG_ROWS = listOf(
     FlagRow("spoofSignature", R.string.pif_flag_spoof_signature_title,
         R.string.pif_flag_spoof_signature_summary, false),
     FlagRow(PlayIntegrityFix.KEY_VENDING_BUILD, R.string.pif_flag_spoof_vending_build_title,
-        R.string.pif_flag_spoof_vending_build_summary, true),
+        R.string.pif_flag_spoof_vending_build_summary, false),
     FlagRow(PlayIntegrityFix.KEY_VENDING_SDK, R.string.pif_flag_spoof_vending_sdk_title,
         R.string.pif_flag_spoof_vending_sdk_summary, false),
 )
@@ -239,7 +239,7 @@ internal fun PlayIntegrityFixContent(state: PifUiState, actions: PifActions) {
         }
 
         SpoofGroup(title = stringResource(R.string.pif_flags_title)) {
-            val vendingBuild = pifFlagOn(config[PlayIntegrityFix.KEY_VENDING_BUILD], true)
+            val vendingBuild = pifFlagOn(config[PlayIntegrityFix.KEY_VENDING_BUILD], false)
             FLAG_ROWS.forEach { flag ->
                 // The framework only applies spoofVendingSdk while Play Store build
                 // spoofing is off.
